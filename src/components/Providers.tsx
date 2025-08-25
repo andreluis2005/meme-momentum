@@ -11,7 +11,7 @@ const wagmiConfig = createConfig({
   connectors: [
     injected({ target: "metaMask" }),
     walletConnect({
-      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "7dfe94d41de1c06e",
+      projectId: "7dfe94d41de1c06a7b02e621eab53009",
       showQrModal: true,
       metadata: {
         name: "Which Memecoin Are You?",

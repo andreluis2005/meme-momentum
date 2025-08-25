@@ -1,73 +1,207 @@
-# Welcome to your Lovable project
+# Which Memecoin Are You? 🚀
 
-## Project info
+A Web3-powered interactive quiz that helps users discover which memecoin matches their personality. Built with React, Next.js, Base blockchain integration, and real-time analytics.
 
-**URL**: https://lovable.dev/projects/59a6ab1c-04f8-4293-ab51-f3ec2a38137d
+## Features
 
-## How can I edit this code?
+### 🎯 Core Functionality
+- **Interactive Quiz**: 5-question personality quiz with 14+ memecoin results
+- **Web3 Integration**: Wallet connection with Base blockchain support
+- **Real-time Analytics**: Global dashboard showing community results
+- **Personal Results**: Detailed scoring breakdown with beautiful charts
+- **Social Sharing**: Share results on Twitter and Warpcast
 
-There are several ways of editing your application.
+### 🔧 Technical Features
+- **User Authentication**: Wallet-based login system
+- **Database Storage**: Supabase integration for user data and quiz results
+- **Real-time Updates**: WebSocket connections for live dashboard updates
+- **Responsive Design**: Beautiful UI with dark/light mode support
+- **SEO Optimized**: Proper meta tags and semantic HTML
 
-**Use Lovable**
+### 🎨 Advanced Features
+- **Confetti Animations**: Celebration effects on quiz completion
+- **Donation System**: Support developer with ETH donations
+- **Filtering Options**: Filter results by animal theme and blockchain
+- **Chart Visualizations**: Beautiful Chart.js visualizations
+- **Error Handling**: Comprehensive error handling and loading states
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/59a6ab1c-04f8-4293-ab51-f3ec2a38137d) and start prompting.
+## Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Blockchain**: Wagmi, Viem, Base network
+- **Database**: Supabase (PostgreSQL)
+- **Charts**: Chart.js, React Chart.js 2
+- **Real-time**: Socket.io
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui, Radix UI
 
-**Use your preferred IDE**
+## Database Schema
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```sql
+-- Users table
+CREATE TABLE users (
+  wallet_address TEXT PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT NOW()
+);
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+-- Quiz results table  
+CREATE TABLE quiz_results (
+  id SERIAL PRIMARY KEY,
+  user_address TEXT REFERENCES users(wallet_address),
+  memecoin_match TEXT NOT NULL,
+  scores JSONB NOT NULL,
+  timestamp TIMESTAMP DEFAULT NOW(),
+  animal_restriction TEXT,
+  blockchain_restriction TEXT
+);
 
-Follow these steps:
+-- Donations table
+CREATE TABLE donations (
+  id SERIAL PRIMARY KEY,
+  user_address TEXT NOT NULL,
+  amount DECIMAL NOT NULL,
+  currency TEXT DEFAULT 'ETH',
+  to_address TEXT NOT NULL,
+  cause TEXT DEFAULT 'developer',
+  dev_donation DECIMAL DEFAULT 0,
+  tx_hash TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Getting Started
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Prerequisites
+- Node.js 18+ and npm
+- Supabase account and project
+- Base wallet (MetaMask, Coinbase Wallet, etc.)
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd which-memecoin-are-you
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Set up environment variables**
+```bash
+cp .env.example .env.local
+```
+
+Fill in your environment variables:
+- Supabase URL and keys
+- WalletConnect project ID
+- Other API keys as needed
+
+4. **Set up Supabase**
+- Create the database tables using the schema above
+- Enable Row Level Security (RLS) policies as needed
+- Set up authentication if required
+
+5. **Start the development server**
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+6. **Start the WebSocket server** (optional, for real-time updates)
+```bash
+cd server
+node server.js
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The app will be available at `http://localhost:5173`
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+├── components/
+│   ├── Quiz.tsx              # Main quiz component
+│   ├── WalletConnection.tsx  # Wallet integration
+│   ├── Filters.tsx           # Filter controls
+│   ├── DonationForm.tsx      # ETH donation form
+│   └── Providers.tsx         # Wagmi/React Query providers
+├── hooks/
+│   └── useQuiz.ts           # Quiz logic and data management
+├── pages/
+│   └── Index.tsx            # Main quiz page
+├── app/
+│   ├── login/page.tsx       # Login/wallet connection
+│   ├── dashboard/page.tsx   # Global analytics dashboard
+│   └── api/
+│       ├── global-results/  # API for fetching aggregated results
+│       └── donate/          # API for processing donations
+└── lib/
+    └── supabase.ts          # Database client and helpers
+```
 
-## What technologies are used for this project?
+## Key Components
 
-This project is built with:
+### Quiz Flow
+1. **Login**: Users connect their wallet
+2. **Filters**: Optional animal/blockchain restrictions
+3. **Quiz**: 5 questions with multiple choice answers
+4. **Results**: Personal result with sharing options
+5. **Analytics**: View global community results
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Security Features
+- Wallet address validation
+- Input sanitization
+- Error boundary handling
+- RLS policies on database
 
-## How can I deploy this project?
+### Performance Optimizations
+- Lazy loading of components
+- Optimized re-renders with React hooks
+- Efficient chart updates
+- WebSocket connection management
 
-Simply open [Lovable](https://lovable.dev/projects/59a6ab1c-04f8-4293-ab51-f3ec2a38137d) and click on Share -> Publish.
+## Deployment
 
-## Can I connect a custom domain to my Lovable project?
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on git push
 
-Yes, you can!
+### Manual Deployment
+```bash
+npm run build
+npm run start
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Contributing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Environment Variables
+
+See `.env.example` for all required environment variables. Key variables include:
+
+- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase anonymous key
+- `SUPABASE_SERVICE_ROLE_KEY`: Supabase service role key (server-side)
+- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`: WalletConnect project ID
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- Built during Onchain Summer with Base blockchain
+- Inspired by the vibrant memecoin community
+- Uses amazing tools from the Ethereum ecosystem
+
+---
+
+**Take the quiz and discover your memecoin personality!** 🎉

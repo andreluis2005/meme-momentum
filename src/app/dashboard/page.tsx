@@ -65,40 +65,7 @@ export default function DashboardPage() {
     fetchResults();
   }, [timePeriod, animalFilter, blockchainFilter]);
 
-  // WebSocket for real-time updates
-  useEffect(() => {
-    let socket: any = null;
-    
-    const connectWebSocket = async () => {
-      try {
-        const io = await import('socket.io-client');
-        socket = io.default('ws://localhost:3001');
-        
-        socket.on('connect', () => {
-          console.log('Connected to WebSocket');
-        });
-        
-        socket.on('quizResult', (data: any) => {
-          console.log('New quiz result:', data);
-          fetchResults(); // Refresh data when new result comes in
-        });
-        
-        socket.on('disconnect', () => {
-          console.log('Disconnected from WebSocket');
-        });
-      } catch (error) {
-        console.warn('WebSocket connection failed:', error);
-      }
-    };
-
-    connectWebSocket();
-
-    return () => {
-      if (socket) {
-        socket.disconnect();
-      }
-    };
-  }, []);
+  // Removed WebSocket for simplicity - focusing on core functionality
 
   const chartData = {
     labels: results.map(r => r.memecoin_match),

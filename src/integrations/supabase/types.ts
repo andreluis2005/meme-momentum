@@ -14,7 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      quiz_results: {
+        Row: {
+          animal_restriction: string | null
+          blockchain_restriction: string | null
+          id: number
+          memecoin_match: string
+          scores: Json
+          timestamp: string | null
+          user_address: string
+        }
+        Insert: {
+          animal_restriction?: string | null
+          blockchain_restriction?: string | null
+          id?: number
+          memecoin_match: string
+          scores: Json
+          timestamp?: string | null
+          user_address: string
+        }
+        Update: {
+          animal_restriction?: string | null
+          blockchain_restriction?: string | null
+          id?: number
+          memecoin_match?: string
+          scores?: Json
+          timestamp?: string | null
+          user_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_results_user_address_fkey"
+            columns: ["user_address"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["wallet_address"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string | null
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string | null
+          wallet_address?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

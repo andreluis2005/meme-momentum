@@ -217,21 +217,29 @@ const Index = () => {
     <div className="min-h-screen p-4 hero-gradient">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 memecoin-gradient bg-clip-text text-transparent">
-            Which Memecoin Are You?
-          </h1>
-          <p className="text-xl text-muted-foreground mb-6">
-            Discover your memecoin personality through our interactive quiz
+        <div className="text-center mb-12 space-y-6">
+          <div className="inline-block">
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 memecoin-gradient bg-clip-text text-transparent animate-pulse">
+              Which Memecoin Are You?
+            </h1>
+            <div className="h-1 w-full memecoin-gradient rounded-full"></div>
+          </div>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Discover your memecoin personality through our interactive quiz and join thousands of others!
           </p>
           
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/dashboard">
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 hover-scale border-primary/20 hover:border-primary/50">
                 <FaGlobe className="w-4 h-4" />
-                Global Analytics
+                View Global Analytics
               </Button>
             </Link>
+            <Button variant="outline" className="gap-2 hover-scale border-accent/20 hover:border-accent/50">
+              <FaChartBar className="w-4 h-4" />
+              {address ? 'Connected to Wallet' : 'Connect Wallet to Start'}
+            </Button>
           </div>
         </div>
 

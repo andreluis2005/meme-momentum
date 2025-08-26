@@ -8,55 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
 :root {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
+    --background: 229 84% 5%;
+    --foreground: 210 40% 98%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
+    --card: 229 84% 7%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 213 31% 91%;
+    --popover: 229 84% 7%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 263 70% 65%;
+    --primary: 270 95% 75%;
+    --primary-foreground: 229 84% 5%;
+    --primary-glow: 270 95% 85%;
 
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 213 31% 91%;
+    --secondary: 215 27% 32%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 25% 27%;
+    --muted: 215 27% 17%;
     --muted-foreground: 217 10% 64%;
 
-    --accent: 142 76% 36%;
-    --accent-foreground: 213 31% 91%;
-    --accent-glow: 142 76% 50%;
+    --accent: 142 69% 58%;
+    --accent-foreground: 229 84% 5%;
+    --accent-glow: 142 69% 70%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 25% 27%;
-    --input: 215 25% 27%;
-    --ring: 263 70% 50%;
+    --border: 215 27% 17%;
+    --input: 215 27% 17%;
+    --ring: 270 95% 75%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Memecoin Theme Colors */
-    --memecoin-gold: 45 93% 47%;
-    --memecoin-purple: 263 70% 50%;
-    --memecoin-green: 142 76% 36%;
-    --memecoin-blue: 217 91% 60%;
-    --memecoin-orange: 25 95% 53%;
+    /* Enhanced Memecoin Theme Colors */
+    --memecoin-gold: 45 96% 64%;
+    --memecoin-purple: 270 95% 75%;
+    --memecoin-green: 142 69% 58%;
+    --memecoin-blue: 217 91% 70%;
+    --memecoin-orange: 25 95% 63%;
+    --memecoin-pink: 320 86% 78%;
+    --memecoin-cyan: 187 85% 70%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
-    --gradient-memecoin: linear-gradient(135deg, hsl(var(--memecoin-purple)), hsl(var(--memecoin-gold)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(215 25% 15%));
+    /* Enhanced Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270 95% 75%), hsl(320 86% 78%));
+    --gradient-accent: linear-gradient(135deg, hsl(142 69% 58%), hsl(187 85% 70%));
+    --gradient-memecoin: linear-gradient(135deg, hsl(270 95% 75%), hsl(45 96% 64%));
+    --gradient-hero: linear-gradient(135deg, hsl(229 84% 5%), hsl(229 84% 8%));
+    --gradient-card: linear-gradient(135deg, hsl(229 84% 7% / 0.8), hsl(229 84% 10% / 0.6));
 
-    /* Shadows */
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
-    --shadow-accent: 0 0 30px hsl(var(--accent-glow) / 0.2);
-    --shadow-card: 0 8px 32px hsl(224 71% 4% / 0.3);
+    /* Enhanced Shadows */
+    --shadow-glow: 0 0 50px hsl(270 95% 75% / 0.4);
+    --shadow-accent: 0 0 40px hsl(142 69% 58% / 0.3);
+    --shadow-card: 0 20px 60px hsl(229 84% 5% / 0.6);
+    --shadow-button: 0 8px 30px hsl(270 95% 75% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -126,6 +130,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans;
     background: var(--gradient-hero);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 
   .confetti-piece {
@@ -154,21 +160,60 @@ All colors MUST be HSL.
 
 @layer components {
   .btn-memecoin {
-    @apply bg-gradient-to-r from-purple-600 to-amber-500 text-white font-bold py-3 px-6 rounded-xl;
+    background: var(--gradient-primary);
+    @apply text-primary-foreground font-bold py-4 px-8 rounded-2xl;
     @apply shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
-    @apply hover:from-purple-700 hover:to-amber-600 focus:outline-none focus:ring-4 focus:ring-purple-300;
+    @apply focus:outline-none focus:ring-4 focus:ring-primary/30 relative overflow-hidden;
+    box-shadow: var(--shadow-button);
+  }
+
+  .btn-memecoin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-memecoin:hover::before {
+    left: 100%;
   }
 
   .btn-quiz {
-    @apply bg-gradient-to-r from-accent to-accent-glow text-accent-foreground font-semibold py-3 px-6 rounded-lg;
+    background: var(--gradient-accent);
+    @apply text-accent-foreground font-semibold py-3 px-6 rounded-xl;
     @apply shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300;
     @apply focus:outline-none focus:ring-4 focus:ring-accent/30;
   }
 
   .card-quiz {
-    @apply bg-card/80 backdrop-blur-sm border border-border rounded-xl p-6;
-    @apply shadow-lg hover:shadow-xl transition-all duration-300;
+    background: var(--gradient-card);
+    @apply backdrop-blur-md border border-border/50 rounded-2xl p-8;
+    @apply transition-all duration-500 hover:border-primary/30;
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-quiz:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .loading-spinner {
+    @apply animate-spin rounded-full border-4 border-primary/20 border-t-primary;
   }
 
   .memecoin-gradient {

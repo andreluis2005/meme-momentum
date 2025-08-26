@@ -3,7 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
+import { Link } from "react-router-dom";
+import { FaHome, FaUsers, FaChartLine, FaFilter } from "react-icons/fa";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +14,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 } from "chart.js";
 
 // Register Chart.js components
@@ -21,7 +24,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement
 );
 
 interface QuizResult {
@@ -119,54 +123,133 @@ export default function Dashboard() {
         label: 'Quiz Results',
         data: results.map(r => r.count),
         backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40',
-          '#FF6384',
-          '#C9CBCF'
+          'hsl(270, 95%, 75%)',
+          'hsl(142, 69%, 58%)',
+          'hsl(45, 96%, 64%)',
+          'hsl(217, 91%, 70%)',
+          'hsl(320, 86%, 78%)',
+          'hsl(25, 95%, 63%)',
+          'hsl(187, 85%, 70%)',
+          'hsl(270, 50%, 65%)',
+          'hsl(142, 50%, 45%)',
+          'hsl(45, 80%, 55%)',
         ],
-        borderColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40',
-          '#FF6384',
-          '#C9CBCF'
+        borderColor: 'hsl(var(--border))',
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      },
+    ],
+  };
+
+  const doughnutData = {
+    labels: results.map(r => r.memecoin_match),
+    datasets: [
+      {
+        data: results.map(r => r.percentage),
+        backgroundColor: [
+          'hsl(270, 95%, 75%)',
+          'hsl(142, 69%, 58%)',
+          'hsl(45, 96%, 64%)',
+          'hsl(217, 91%, 70%)',
+          'hsl(320, 86%, 78%)',
+          'hsl(25, 95%, 63%)',
+          'hsl(187, 85%, 70%)',
+          'hsl(270, 50%, 65%)',
+          'hsl(142, 50%, 45%)',
+          'hsl(45, 80%, 55%)',
         ],
-        borderWidth: 1,
+        borderColor: 'hsl(var(--background))',
+        borderWidth: 3,
+        hoverBorderWidth: 4,
       },
     ],
   };
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          color: 'hsl(var(--foreground))',
+          font: {
+            size: 12,
+            family: 'system-ui',
+          },
+          padding: 20,
+        },
       },
       title: {
         display: true,
-        text: 'Global Quiz Results',
+        text: 'Global Quiz Results Distribution',
+        color: 'hsl(var(--foreground))',
+        font: {
+          size: 16,
+          weight: 'bold' as const,
+        },
+        padding: 20,
       },
     },
     scales: {
       y: {
         beginAtZero: true,
+        ticks: {
+          color: 'hsl(var(--muted-foreground))',
+        },
+        grid: {
+          color: 'hsl(var(--border))',
+        },
+      },
+      x: {
+        ticks: {
+          color: 'hsl(var(--muted-foreground))',
+          maxRotation: 45,
+        },
+        grid: {
+          color: 'hsl(var(--border))',
+        },
+      },
+    },
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'right' as const,
+        labels: {
+          color: 'hsl(var(--foreground))',
+          font: {
+            size: 12,
+          },
+          padding: 15,
+          usePointStyle: true,
+        },
+      },
+      title: {
+        display: true,
+        text: 'Percentage Distribution',
+        color: 'hsl(var(--foreground))',
+        font: {
+          size: 16,
+          weight: 'bold' as const,
+        },
+        padding: 20,
       },
     },
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto p-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center">Loading dashboard...</div>
+      <div className="min-h-screen hero-gradient flex items-center justify-center p-6">
+        <Card className="card-quiz max-w-md w-full">
+          <CardContent className="p-8 text-center space-y-4">
+            <div className="loading-spinner w-12 h-12 mx-auto"></div>
+            <h3 className="text-xl font-semibold">Loading Dashboard</h3>
+            <p className="text-muted-foreground">Fetching global quiz results...</p>
           </CardContent>
         </Card>
       </div>
@@ -175,11 +258,13 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="container mx-auto p-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center text-red-500">Error: {error}</div>
-            <Button onClick={fetchResults} className="mt-4">
+      <div className="min-h-screen hero-gradient flex items-center justify-center p-6">
+        <Card className="card-quiz max-w-md w-full">
+          <CardContent className="p-8 text-center space-y-4">
+            <div className="text-6xl mb-4">⚠️</div>
+            <h3 className="text-xl font-semibold text-destructive">Error Loading Data</h3>
+            <p className="text-muted-foreground">{error}</p>
+            <Button onClick={fetchResults} className="btn-memecoin">
               Try Again
             </Button>
           </CardContent>
@@ -189,79 +274,195 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Global Quiz Results Dashboard</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <Select value={timePeriod} onValueChange={setTimePeriod}>
-              <SelectTrigger>
-                <SelectValue placeholder="Time Period" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Time</SelectItem>
-                <SelectItem value="1">Last 24 Hours</SelectItem>
-                <SelectItem value="7">Last 7 Days</SelectItem>
-                <SelectItem value="30">Last 30 Days</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={animalFilter} onValueChange={setAnimalFilter}>
-              <SelectTrigger>
-                <SelectValue placeholder="Animal Filter" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Animals</SelectItem>
-                <SelectItem value="dogs">Dogs</SelectItem>
-                <SelectItem value="cats">Cats</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={blockchainFilter} onValueChange={setBlockchainFilter}>
-              <SelectTrigger>
-                <SelectValue placeholder="Blockchain Filter" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Blockchains</SelectItem>
-                <SelectItem value="ethereum">Ethereum</SelectItem>
-                <SelectItem value="base">Base</SelectItem>
-                <SelectItem value="solana">Solana</SelectItem>
-              </SelectContent>
-            </Select>
+    <div className="min-h-screen hero-gradient p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl md:text-5xl font-bold memecoin-gradient bg-clip-text text-transparent">
+            Global Analytics Dashboard
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            Real-time insights from memecoin quiz results worldwide
+          </p>
+          
+          <div className="flex justify-center">
+            <Link to="/">
+              <Button variant="outline" className="gap-2">
+                <FaHome className="w-4 h-4" />
+                Back to Quiz
+              </Button>
+            </Link>
           </div>
+        </div>
 
-          {results.length > 0 ? (
-            <div className="space-y-6">
-              <div className="h-96">
-                <Bar data={chartData} options={chartOptions} />
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="card-quiz text-center">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Total Responses</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-primary">
+                {results.reduce((sum, r) => sum + r.count, 0)}
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {results.map((result, index) => (
-                  <Card key={result.memecoin_match}>
-                    <CardContent className="p-4">
-                      <div className="text-lg font-semibold">{result.memecoin_match}</div>
-                      <div className="text-2xl font-bold text-primary">
-                        {result.count}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {result.percentage.toFixed(1)}%
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+                <FaUsers className="w-3 h-3" />
+                Quiz participants
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card-quiz text-center">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Top Memecoin</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-accent">
+                {results[0]?.memecoin_match || "N/A"}
+              </div>
+              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+                <FaChartLine className="w-3 h-3" />
+                {results[0]?.percentage.toFixed(1) || 0}% of all results
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card-quiz text-center">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Active Filters</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-memecoin-blue">
+                {[timePeriod !== "all" ? "1" : "0", animalFilter !== "all" ? "1" : "0", blockchainFilter !== "all" ? "1" : "0"].filter(f => f === "1").length}
+              </div>
+              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+                <FaFilter className="w-3 h-3" />
+                Applied filters
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filters */}
+        <Card className="card-quiz">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FaFilter className="w-5 h-5" />
+              Filter Results
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Select value={timePeriod} onValueChange={setTimePeriod}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Time Period" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Time</SelectItem>
+                  <SelectItem value="1">Last 24 Hours</SelectItem>
+                  <SelectItem value="7">Last 7 Days</SelectItem>
+                  <SelectItem value="30">Last 30 Days</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={animalFilter} onValueChange={setAnimalFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Animal Filter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Animals</SelectItem>
+                  <SelectItem value="dogs">Dogs</SelectItem>
+                  <SelectItem value="cats">Cats</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={blockchainFilter} onValueChange={setBlockchainFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Blockchain Filter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Blockchains</SelectItem>
+                  <SelectItem value="ethereum">Ethereum</SelectItem>
+                  <SelectItem value="base">Base</SelectItem>
+                  <SelectItem value="solana">Solana</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No quiz results found for the selected filters.</p>
+          </CardContent>
+        </Card>
+
+        {results.length > 0 ? (
+          <div className="space-y-8">
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <Card className="card-quiz">
+                <CardHeader>
+                  <CardTitle>Distribution Chart</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80">
+                    <Bar data={chartData} options={chartOptions} />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="card-quiz">
+                <CardHeader>
+                  <CardTitle>Percentage Breakdown</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80">
+                    <Doughnut data={doughnutData} options={doughnutOptions} />
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            
+            {/* Results Grid */}
+            <Card className="card-quiz">
+              <CardHeader>
+                <CardTitle>Detailed Results</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {results.map((result, index) => (
+                    <Card key={result.memecoin_match} className="bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-300">
+                      <CardContent className="p-4 text-center">
+                        <div className="text-lg font-semibold text-foreground mb-2">
+                          {result.memecoin_match}
+                        </div>
+                        <div className="text-3xl font-bold text-primary mb-1">
+                          {result.count}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {result.percentage.toFixed(1)}% of total
+                        </div>
+                        <div className="mt-2 w-full bg-border rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-primary to-accent h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${result.percentage}%` }}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          <Card className="card-quiz">
+            <CardContent className="text-center py-12">
+              <div className="text-6xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold mb-2">No Results Found</h3>
+              <p className="text-muted-foreground">
+                No quiz results found for the selected filters. Try adjusting your filter criteria.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }

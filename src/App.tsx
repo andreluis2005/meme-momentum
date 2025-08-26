@@ -4,8 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Providers } from "@/components/Providers";
 import Index from "./pages/Index";
-import LoginPage from "./app/login/page";
-import DashboardPage from "./app/dashboard/page";
+import LoginPage from "./pages/Login";
+import DashboardPage from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const App = () => (

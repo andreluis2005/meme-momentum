@@ -1,12 +1,9 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate, Link } from "react-router-dom";
 import { useAccount } from "wagmi";
 import { useToast } from "@/hooks/use-toast";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import Link from "next/link";
 
 import WalletConnection from "@/components/WalletConnection";
 import Quiz from "@/components/Quiz";
@@ -74,7 +71,7 @@ function spawnConfetti() {
 
 const Index = () => {
   const { address } = useAccount();
-  const router = useRouter();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { saveQuizResult, getTopMemecoin, isLoading: quizLoading } = useQuiz();
   
@@ -87,9 +84,9 @@ const Index = () => {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!address) {
-      router.push("/login");
+      navigate("/login");
     }
-  }, [address, router]);
+  }, [address, navigate]);
 
   // Don't render anything while checking auth
   if (!address) {
@@ -229,7 +226,7 @@ const Index = () => {
           </p>
           
           <div className="flex justify-center gap-4 mb-8">
-            <Link href="/dashboard">
+            <Link to="/dashboard">
               <Button variant="outline" className="gap-2">
                 <FaGlobe className="w-4 h-4" />
                 Global Analytics

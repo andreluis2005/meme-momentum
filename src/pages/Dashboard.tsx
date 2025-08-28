@@ -57,53 +57,23 @@ export default function Dashboard() {
       setLoading(true);
       setError(null);
 
-      // Fetch from Supabase directly instead of API route
-      let query = supabase
-        .from("quiz_results")
-        .select("memecoin_match, timestamp, animal_restriction, blockchain_restriction");
+      // Use the new secure analytics function that returns aggregated data
+      const periodDays = timePeriod !== "all" ? parseInt(timePeriod) : null;
+      const animalFilterValue = animalFilter !== "all" ? animalFilter : null;
+      const blockchainFilterValue = blockchainFilter !== "all" ? blockchainFilter : null;
 
-      // Apply time period filter
-      if (timePeriod !== "all") {
-        const days = parseInt(timePeriod);
-        const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - days);
-        query = query.gte("timestamp", cutoffDate.toISOString());
-      }
-
-      // Apply animal filter
-      if (animalFilter !== "all") {
-        query = query.eq("animal_restriction", animalFilter);
-      }
-
-      // Apply blockchain filter
-      if (blockchainFilter !== "all") {
-        query = query.eq("blockchain_restriction", blockchainFilter);
-      }
-
-      const { data, error } = await query;
+      const { data, error } = await supabase.rpc('get_quiz_analytics', {
+        period_days: periodDays,
+        animal_filter: animalFilterValue,
+        blockchain_filter: blockchainFilterValue
+      });
 
       if (error) {
         throw error;
       }
 
-      // Aggregate results
-      const aggregated = (data || []).reduce((acc: { [key: string]: number }, item) => {
-        const memecoin = item.memecoin_match;
-        acc[memecoin] = (acc[memecoin] || 0) + 1;
-        return acc;
-      }, {});
-
-      // Convert to array with percentages
-      const total = Object.values(aggregated).reduce((sum: number, count) => sum + count, 0);
-      const processedResults = Object.entries(aggregated)
-        .map(([memecoin_match, count]) => ({
-          memecoin_match,
-          count: count as number,
-          percentage: total > 0 ? ((count as number / total) * 100) : 0,
-        }))
-        .sort((a, b) => b.count - a.count);
-
-      setResults(processedResults);
+      // The function already returns aggregated results with percentages
+      setResults(data || []);
     } catch (error) {
       console.error("Error fetching results:", error);
       setError(error instanceof Error ? error.message : "Unknown error");

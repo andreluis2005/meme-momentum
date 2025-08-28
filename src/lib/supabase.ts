@@ -57,25 +57,14 @@ export async function getGlobalResults(filters: {
   animal?: string;
   blockchain?: string;
 } = {}) {
-  let query = supabase
-    .from('quiz_results')
-    .select('memecoin_match, timestamp, animal_restriction, blockchain_restriction');
+  // Use the new secure analytics function that doesn't expose user data
+  const periodDays = filters.period && filters.period !== 'all' ? parseInt(filters.period) : null;
+  const animalFilter = filters.animal && filters.animal !== 'all' ? filters.animal : null;
+  const blockchainFilter = filters.blockchain && filters.blockchain !== 'all' ? filters.blockchain : null;
 
-  // Apply filters
-  if (filters.period && filters.period !== 'all') {
-    const days = parseInt(filters.period);
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - days);
-    query = query.gte('timestamp', cutoffDate.toISOString());
-  }
-
-  if (filters.animal && filters.animal !== 'all') {
-    query = query.eq('animal_restriction', filters.animal);
-  }
-
-  if (filters.blockchain && filters.blockchain !== 'all') {
-    query = query.eq('blockchain_restriction', filters.blockchain);
-  }
-
-  return await query;
+  return await supabase.rpc('get_quiz_analytics', {
+    period_days: periodDays,
+    animal_filter: animalFilter,
+    blockchain_filter: blockchainFilter
+  });
 }

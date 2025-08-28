@@ -1,1 +1,18 @@
 project_id = "kifazfavgxpanbdkmtaj"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "storage"]
+max_rows = 1000
+
+[db]
+port = 54322
+
+[studio]
+enabled = true
+port = 54323
+
+[functions.donate]
+verify_jwt = false

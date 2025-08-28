@@ -281,7 +281,7 @@ export default function Dashboard() {
           <h1 className="text-4xl md:text-5xl font-bold memecoin-gradient bg-clip-text text-transparent">
             Global Analytics Dashboard
           </h1>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-foreground/90 font-medium">
             Real-time insights from memecoin quiz results worldwide
           </p>
           
@@ -299,13 +299,13 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="card-quiz text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Responses</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground/80">Total Responses</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-primary">
                 {results.reduce((sum, r) => sum + r.count, 0)}
               </div>
-              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+              <div className="flex items-center justify-center gap-1 text-sm text-foreground/70 mt-1">
                 <FaUsers className="w-3 h-3" />
                 Quiz participants
               </div>
@@ -314,13 +314,13 @@ export default function Dashboard() {
 
           <Card className="card-quiz text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Top Memecoin</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground/80">Top Memecoin</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-accent">
                 {results[0]?.memecoin_match || "N/A"}
               </div>
-              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+              <div className="flex items-center justify-center gap-1 text-sm text-foreground/70 mt-1">
                 <FaChartLine className="w-3 h-3" />
                 {results[0]?.percentage.toFixed(1) || 0}% of all results
               </div>
@@ -329,13 +329,13 @@ export default function Dashboard() {
 
           <Card className="card-quiz text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Active Filters</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground/80">Active Filters</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-memecoin-blue">
                 {[timePeriod !== "all" ? "1" : "0", animalFilter !== "all" ? "1" : "0", blockchainFilter !== "all" ? "1" : "0"].filter(f => f === "1").length}
               </div>
-              <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-1">
+              <div className="flex items-center justify-center gap-1 text-sm text-foreground/70 mt-1">
                 <FaFilter className="w-3 h-3" />
                 Applied filters
               </div>
@@ -427,7 +427,7 @@ export default function Dashboard() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {results.map((result, index) => (
-                    <Card key={result.memecoin_match} className="bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-300">
+                    <Card key={result.memecoin_match} className="bg-card/80 border-border hover:border-primary/50 transition-all duration-300">
                       <CardContent className="p-4 text-center">
                         <div className="text-lg font-semibold text-foreground mb-2">
                           {result.memecoin_match}
@@ -435,12 +435,12 @@ export default function Dashboard() {
                         <div className="text-3xl font-bold text-primary mb-1">
                           {result.count}
                         </div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-foreground/80 font-medium">
                           {result.percentage.toFixed(1)}% of total
                         </div>
-                        <div className="mt-2 w-full bg-border rounded-full h-2">
+                        <div className="mt-3 w-full bg-muted/30 rounded-full h-3">
                           <div 
-                            className="bg-gradient-to-r from-primary to-accent h-2 rounded-full transition-all duration-500"
+                            className="bg-gradient-to-r from-primary via-accent to-memecoin-blue h-3 rounded-full transition-all duration-500 shadow-sm"
                             style={{ width: `${result.percentage}%` }}
                           />
                         </div>

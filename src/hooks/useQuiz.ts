@@ -66,20 +66,7 @@ export function useQuiz() {
         throw new Error(`Failed to save quiz result: ${quizError.message}`);
       }
 
-      // Emit WebSocket event for real-time updates
-      if (typeof window !== 'undefined') {
-        try {
-          const io = await import('socket.io-client');
-          const socket = io.default('ws://localhost:3001');
-          socket.emit('quizResult', {
-            memecoin_match: result.memecoin_match,
-            timestamp: new Date().toISOString()
-          });
-          socket.disconnect();
-        } catch (wsError) {
-          console.warn("WebSocket emission failed:", wsError);
-        }
-      }
+      // Success - quiz result saved
 
       return true;
     } catch (err) {

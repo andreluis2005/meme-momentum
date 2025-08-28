@@ -37,14 +37,14 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
         throw new Error("Invalid amount");
       }
 
-      const response = await fetch("/api/donate", {
+      const response = await fetch("https://kifazfavgxpanbdkmtaj.supabase.co/functions/v1/donate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpZmF6ZmF2Z3hwYW5iZGttdGFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5ODQ4NzYsImV4cCI6MjA3MTU2MDg3Nn0.wv-Y6QQoMEeZBTDbrnDrTACHRp4i77BO4hjEXry7-jM`
+        },
         body: JSON.stringify({
-          command: `donate ${donationAmount} ETH to developer`,
-          signerData: { address: userAddress },
-          donateToDev: true,
-          txHash: "",
+          donationAmount: donationAmount
         }),
       });
 

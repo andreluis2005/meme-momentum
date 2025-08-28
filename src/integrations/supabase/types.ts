@@ -72,7 +72,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_quiz_analytics: {
+        Args: {
+          animal_filter?: string
+          blockchain_filter?: string
+          period_days?: number
+        }
+        Returns: {
+          count: number
+          memecoin_match: string
+          percentage: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

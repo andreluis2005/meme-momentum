@@ -75,9 +75,7 @@ const Index = () => {
   const { toast } = useToast();
   const { saveQuizResult, getTopMemecoin, isLoading: quizLoading } = useQuiz();
   
-  const [currentStep, setCurrentStep] = useState<"filters" | "quiz" | "result">("filters");
-  const [animalRestriction, setAnimalRestriction] = useState<string | null>(null);
-  const [blockchainRestriction, setBlockchainRestriction] = useState<string | null>(null);
+  const [currentStep, setCurrentStep] = useState<"quiz" | "result">("quiz");
   const [quizScores, setQuizScores] = useState<{ [key: string]: number }>({});
   const [finalResult, setFinalResult] = useState<string>("");
 
@@ -93,10 +91,6 @@ const Index = () => {
     return null;
   }
 
-  const handleFiltersComplete = () => {
-    setCurrentStep("quiz");
-  };
-
   const handleQuizComplete = async (scores: { [key: string]: number }) => {
     setQuizScores(scores);
     const topMemecoin = getTopMemecoin(scores);
@@ -106,8 +100,6 @@ const Index = () => {
     const success = await saveQuizResult({
       memecoin_match: topMemecoin,
       scores,
-      animal_restriction: animalRestriction,
-      blockchain_restriction: blockchainRestriction,
     });
 
     if (success) {
@@ -143,11 +135,9 @@ const Index = () => {
   };
 
   const resetQuiz = () => {
-    setCurrentStep("filters");
+    setCurrentStep("quiz");
     setQuizScores({});
     setFinalResult("");
-    setAnimalRestriction(null);
-    setBlockchainRestriction(null);
   };
 
   // Chart data for personal results
@@ -248,34 +238,8 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="space-y-8">
-          {currentStep === "filters" && (
-            <div className="space-y-6">
-              <Filters
-                animalRestriction={animalRestriction}
-                blockchainRestriction={blockchainRestriction}
-                onAnimalChange={setAnimalRestriction}
-                onBlockchainChange={setBlockchainRestriction}
-              />
-              
-              <div className="text-center">
-                <Button 
-                  onClick={handleFiltersComplete}
-                  className="btn-memecoin"
-                  size="lg"
-                >
-                  <FaRocket className="w-4 h-4 mr-2" />
-                  Start Quiz
-                </Button>
-              </div>
-            </div>
-          )}
-
           {currentStep === "quiz" && (
-            <Quiz
-              onComplete={handleQuizComplete}
-              animalRestriction={animalRestriction}
-              blockchainRestriction={blockchainRestriction}
-            />
+            <Quiz onComplete={handleQuizComplete} />
           )}
 
           {currentStep === "result" && finalResult && (

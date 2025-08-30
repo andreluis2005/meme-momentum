@@ -15,81 +15,70 @@ interface QuizQuestion {
 
 interface QuizProps {
   onComplete: (scores: { [key: string]: number }) => void;
-  animalRestriction?: string;
-  blockchainRestriction?: string;
 }
 
 const questions: QuizQuestion[] = [
   {
-    question: "What's your trading style?",
+    question: "What's your crypto vibe?",
     options: [
-      { text: "HODL until moon 🚀", points: { Dogecoin: 3, ShibaInu: 2, DOG: 1 } },
-      { text: "Meme it till you make it", points: { Pepe: 3, Fartcoin: 2, MogCoin: 1 } },
-      { text: "High energy, fast trades", points: { Turbo: 3, Dogwifhat: 2, Brett: 1 } },
-      { text: "Political and chaotic", points: { TrumpCoin: 3, SPX: 2, Bonk: 1 } },
+      { text: "HODL forever", points: { Dogecoin: 1, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Day trading every hour", points: { Dogecoin: 0, ShibaInu: 1, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Just memes and fun", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 1, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Only in for fair and transparent launches", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 1, Fartcoin: 0 } },
     ]
   },
   {
-    question: "What's your ideal vacation destination?",
+    question: "Choose your spirit animal:",
     options: [
-      { text: "Moon resort with luxury amenities", points: { Dogecoin: 3, Toshi: 2, DOG: 1 } },
-      { text: "Meme convention in Tokyo", points: { Pepe: 3, MogCoin: 2, Pengu: 1 } },
-      { text: "Adventure racing in Monaco", points: { Turbo: 3, Brett: 2, Dogwifhat: 1 } },
-      { text: "Political rally in Washington", points: { TrumpCoin: 3, SPX: 2, Fartcoin: 1 } },
+      { text: "Dog", points: { Dogecoin: 1, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Frog", points: { Dogecoin: 0, ShibaInu: 1, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Cat", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 1, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Something chaotic and undefined", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 1, Turbo: 0, DOG: 0, Fartcoin: 0 } },
     ]
   },
   {
-    question: "What's your favorite hobby?",
+    question: "What's your risk appetite?",
     options: [
-      { text: "Creating viral memes", points: { Pepe: 3, Fartcoin: 2, MogCoin: 1 } },
-      { text: "Building crypto portfolios", points: { Dogecoin: 3, ShibaInu: 2, Toshi: 1 } },
-      { text: "Speedrunning video games", points: { Turbo: 3, Brett: 2, DOG: 1 } },
-      { text: "Debating on social media", points: { TrumpCoin: 3, SPX: 2, Bonk: 1 } },
+      { text: "All in, no regrets", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 1, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Small bets only", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 1, DOG: 0, Fartcoin: 0 } },
+      { text: "I follow the community's lead", points: { Dogecoin: 0, ShibaInu: 1, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "I only trust fair launches", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 1, Fartcoin: 0 } },
     ]
   },
   {
-    question: "What motivates you the most?",
+    question: "What's your ideal crypto project trait?",
     options: [
-      { text: "Community and loyalty", points: { Dogecoin: 3, ShibaInu: 2, DOG: 1 } },
-      { text: "Humor and creativity", points: { Pepe: 3, Fartcoin: 2, Dogwifhat: 1 } },
-      { text: "Speed and innovation", points: { Turbo: 3, Brett: 2, Toshi: 1 } },
-      { text: "Power and influence", points: { TrumpCoin: 3, SPX: 2, MogCoin: 1 } },
+      { text: "Strong meme power", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 1, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Huge community", points: { Dogecoin: 0, ShibaInu: 1, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Political spice", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 1, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "No central control", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 1, Fartcoin: 0 } },
     ]
   },
   {
-    question: "What's your communication style?",
+    question: "Which platform do you enjoy the most?",
     options: [
-      { text: "Friendly and supportive", points: { Dogecoin: 3, DOG: 2, Pengu: 1 } },
-      { text: "Sarcastic and witty", points: { Pepe: 3, Fartcoin: 2, MogCoin: 1 } },
-      { text: "Direct and energetic", points: { Turbo: 3, Brett: 2, Dogwifhat: 1 } },
-      { text: "Bold and controversial", points: { TrumpCoin: 3, SPX: 2, Bonk: 1 } },
+      { text: "Ethereum", points: { Dogecoin: 1, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Solana", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 1, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Bitcoin", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 1, Fartcoin: 0 } },
+      { text: "Any chain, as long as it's fun", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 1 } },
+    ]
+  },
+  {
+    question: "If your coin had a superpower, it would be:",
+    options: [
+      { text: "Make people laugh", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 1 } },
+      { text: "Unite people worldwide", points: { Dogecoin: 0, ShibaInu: 1, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Go viral instantly", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 1, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0 } },
+      { text: "Stay fair and unstoppable", points: { Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, MogCoin: 0, Turbo: 0, DOG: 1, Fartcoin: 0 } },
     ]
   }
 ];
 
-const memecoinAnimals: { [key: string]: string } = {
-  Dogecoin: "Dog",
-  ShibaInu: "Dog", 
-  DOG: "Dog",
-  Dogwifhat: "Dog",
-  Bonk: "Dog",
-  Pepe: "Frog",
-  MogCoin: "Cat",
-  Toshi: "Cat",
-  Pengu: "Penguin",
-  Turbo: "None",
-  Brett: "None",
-  TrumpCoin: "None",
-  SPX: "None",
-  Fartcoin: "None"
-};
-
-export default function Quiz({ onComplete, animalRestriction, blockchainRestriction }: QuizProps) {
+export default function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<{ [key: string]: number }>({
-    Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, Dogwifhat: 0, 
-    MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0, Pengu: 0, Bonk: 0, 
-    SPX: 0, Toshi: 0, Brett: 0
+    Dogecoin: 0, ShibaInu: 0, Pepe: 0, TrumpCoin: 0, dogwifhat: 0, 
+    MogCoin: 0, Turbo: 0, DOG: 0, Fartcoin: 0
   });
   const { toast } = useToast();
 
@@ -98,14 +87,6 @@ export default function Quiz({ onComplete, animalRestriction, blockchainRestrict
       const newScores = { ...prev };
       
       Object.entries(points).forEach(([coin, pointValue]) => {
-        // Apply animal restriction
-        if (animalRestriction && animalRestriction !== "All") {
-          const coinAnimal = memecoinAnimals[coin];
-          if (coinAnimal !== animalRestriction) {
-            return; // Skip this coin if it doesn't match the animal filter
-          }
-        }
-        
         newScores[coin] = (newScores[coin] || 0) + pointValue;
       });
       

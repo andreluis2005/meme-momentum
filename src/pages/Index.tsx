@@ -7,12 +7,12 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 import WalletConnection from "@/components/WalletConnection";
 import Quiz from "@/components/Quiz";
-import Filters from "@/components/Filters";
 import DonationForm from "@/components/DonationForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuiz } from "@/hooks/useQuiz";
-import { FaChartBar, FaGlobe, FaRocket } from "react-icons/fa";
+import { FaChartBar, FaGlobe, FaRocket, FaGem } from "react-icons/fa";
+import { Sparkles } from "lucide-react";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -204,89 +204,111 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 hero-gradient">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 space-y-6">
-          <div className="inline-block">
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 memecoin-gradient bg-clip-text text-transparent animate-pulse">
+    <div className="min-h-screen p-4 hero-gradient relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-float"></div>
+        <div className="absolute top-1/3 right-10 w-24 h-24 bg-accent/10 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-primary/5 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Enhanced Header */}
+        <div className="text-center mb-16 space-y-8">
+          <div className="inline-block relative">
+            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 memecoin-gradient bg-clip-text text-transparent animate-pulse">
               Which Memecoin Are You?
             </h1>
-            <div className="h-1 w-full memecoin-gradient rounded-full"></div>
+            <div className="h-2 w-full memecoin-gradient rounded-full glow-effect"></div>
+            <Sparkles className="absolute -top-4 -right-4 text-primary text-3xl animate-float" />
+            <FaGem className="absolute -bottom-2 -left-2 text-accent text-2xl animate-float" style={{animationDelay: '1s'}} />
           </div>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Discover your memecoin personality through our interactive quiz and join thousands of others!
+          <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
+            Discover your <span className="text-primary font-bold">memecoin personality</span> through our interactive quiz and join <span className="text-accent font-bold">thousands of others</span>!
           </p>
           
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
             <Link to="/dashboard">
-              <Button variant="outline" className="gap-2 hover-scale border-primary/20 hover:border-primary/50">
-                <FaGlobe className="w-4 h-4" />
+              <Button variant="outline" className="gap-3 hover-scale border-primary/30 hover:border-primary/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
+                <FaGlobe className="w-5 h-5" />
                 View Global Analytics
               </Button>
             </Link>
-            <Button variant="outline" className="gap-2 hover-scale border-accent/20 hover:border-accent/50">
-              <FaChartBar className="w-4 h-4" />
-              {address ? 'Connected to Wallet' : 'Connect Wallet to Start'}
+            <Button variant="outline" className="gap-3 hover-scale border-accent/30 hover:border-accent/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
+              <FaChartBar className="w-5 h-5" />
+              {address ? '✅ Wallet Connected' : '🔗 Connect Wallet to Start'}
             </Button>
           </div>
         </div>
 
         {/* Wallet Connection */}
-        <WalletConnection onConnect={handleWalletConnect} showCard={false} />
+        <div className="mb-8">
+          <WalletConnection onConnect={handleWalletConnect} showCard={false} />
+        </div>
 
         {/* Main Content */}
-        <div className="space-y-8">
+        <div className="space-y-12">
           {currentStep === "quiz" && (
-            <Quiz onComplete={handleQuizComplete} />
+            <div className="relative">
+              <Quiz onComplete={handleQuizComplete} />
+            </div>
           )}
 
           {currentStep === "result" && finalResult && (
-            <div className="space-y-8">
-              {/* Result Card */}
-              <Card className="card-quiz text-center glow-effect">
-                <CardHeader>
-                  <CardTitle className="text-3xl font-bold">
+            <div className="space-y-12">
+              {/* Enhanced Result Card */}
+              <Card className="card-quiz text-center glow-effect relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 pointer-events-none"></div>
+                <CardHeader className="relative z-10">
+                  <CardTitle className="text-4xl md:text-5xl font-bold mb-4 flex items-center justify-center gap-4">
+                    <Sparkles className="text-primary animate-pulse" />
                     You are {memecoins[finalResult]?.name || finalResult}!
+                    <Sparkles className="text-accent animate-pulse" />
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <img 
-                    src={memecoins[finalResult]?.image} 
-                    alt={memecoins[finalResult]?.name || finalResult}
-                    className="w-32 h-32 mx-auto rounded-full shadow-lg"
-                  />
-                  <p className="text-lg text-muted-foreground max-w-md mx-auto">
+                <CardContent className="space-y-8 relative z-10">
+                  <div className="relative inline-block">
+                    <img 
+                      src={memecoins[finalResult]?.image} 
+                      alt={memecoins[finalResult]?.name || finalResult}
+                      className="w-40 h-40 mx-auto rounded-full shadow-2xl border-4 border-primary/30 glow-effect"
+                    />
+                    <div className="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
+                  </div>
+                  
+                  <p className="text-xl md:text-2xl text-muted-foreground max-w-md mx-auto leading-relaxed font-medium">
                     {memecoins[finalResult]?.description || "A unique memecoin personality!"}
                   </p>
                   
-                  <div className="flex justify-center gap-4">
-                    <Button onClick={shareOnTwitter} className="btn-quiz">
-                      Share on Twitter
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <Button onClick={shareOnTwitter} className="btn-quiz text-lg px-8 py-4">
+                      🐦 Share on Twitter
                     </Button>
-                    <Button onClick={shareOnWarpcast} className="btn-quiz">
-                      Share on Warpcast
+                    <Button onClick={shareOnWarpcast} className="btn-quiz text-lg px-8 py-4">
+                      🟣 Share on Warpcast
                     </Button>
                   </div>
                   
-                  <Button onClick={resetQuiz} variant="outline">
-                    Take Quiz Again
+                  <Button onClick={resetQuiz} variant="outline" className="hover-scale border-primary/30 hover:border-primary/70 text-lg px-8 py-4">
+                    🎲 Take Quiz Again
                   </Button>
                 </CardContent>
               </Card>
 
-              {/* Personal Chart */}
+              {/* Enhanced Personal Chart */}
               {Object.keys(quizScores).length > 0 && (
-                <Card className="card-quiz">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <FaChartBar className="w-5 h-5" />
+                <Card className="card-quiz relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-primary/5 pointer-events-none"></div>
+                  <CardHeader className="relative z-10">
+                    <CardTitle className="flex items-center gap-3 text-2xl">
+                      <FaChartBar className="w-6 h-6 text-accent" />
                       Your Results Breakdown
+                      <Sparkles className="w-5 h-5 text-primary animate-pulse" />
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="h-64">
+                  <CardContent className="relative z-10">
+                    <div className="h-80 p-4">
                       <Bar data={chartData} options={chartOptions} />
                     </div>
                   </CardContent>
@@ -295,21 +317,25 @@ const Index = () => {
             </div>
           )}
 
-          {/* Donation Form */}
+          {/* Enhanced Donation Form */}
           {address && (
-            <DonationForm userAddress={address} />
+            <div className="mt-16">
+              <DonationForm userAddress={address} />
+            </div>
           )}
         </div>
 
-        {/* Footer */}
-        <footer className="mt-16 text-center">
-          <p className="text-sm text-muted-foreground">
-            Built with{" "}
-            <a href="https://base.org" className="text-accent hover:underline">Base</a>,{" "}
-            <a href="https://supabase.com" className="text-accent hover:underline">Supabase</a>,{" "}
-            and{" "}
-            <a href="https://github.com" className="text-accent hover:underline">open source</a>
-          </p>
+        {/* Enhanced Footer */}
+        <footer className="mt-20 text-center relative">
+          <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-8 glow-effect">
+            <p className="text-muted-foreground text-lg">
+              Built with ❤️ using{" "}
+              <a href="https://base.org" className="text-primary hover:text-primary/80 hover:underline font-semibold">Base</a>,{" "}
+              <a href="https://supabase.com" className="text-accent hover:text-accent/80 hover:underline font-semibold">Supabase</a>,{" "}
+              and{" "}
+              <a href="https://github.com" className="text-primary hover:text-primary/80 hover:underline font-semibold">open source</a>
+            </p>
+          </div>
         </footer>
 
         {/* Confetti Container */}

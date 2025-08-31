@@ -14,6 +14,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { FaChartBar, FaGlobe, FaRocket, FaGem } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import dogBitcoinImage from "@/assets/dog-bitcoin.png";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -215,31 +216,38 @@ const Index = () => {
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Enhanced Header */}
-        <div className="text-center mb-16 space-y-8">
-          <div className="inline-block relative">
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 memecoin-gradient bg-clip-text text-transparent animate-pulse">
-              Which Memecoin Are You?
-            </h1>
-            <div className="h-2 w-full memecoin-gradient rounded-full glow-effect"></div>
-            <Sparkles className="absolute -top-4 -right-4 text-primary text-3xl animate-float" />
-            <FaGem className="absolute -bottom-2 -left-2 text-accent text-2xl animate-float" style={{animationDelay: '1s'}} />
+        <div className="relative">
+          {/* Theme Toggle */}
+          <div className="absolute top-0 right-0 z-20">
+            <ThemeToggle />
           </div>
           
-          <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
-            Discover your <span className="text-primary font-bold">memecoin personality</span> through our interactive quiz and join <span className="text-accent font-bold">thousands of others</span>!
-          </p>
+          <div className="text-center mb-16 space-y-8">
+            <div className="inline-block relative">
+              <h1 className="text-6xl md:text-8xl font-extrabold mb-6 memecoin-gradient bg-clip-text text-transparent animate-pulse">
+                Which Memecoin Are You?
+              </h1>
+              <div className="h-2 w-full memecoin-gradient rounded-full glow-effect"></div>
+              <Sparkles className="absolute -top-4 -right-4 text-primary text-3xl animate-float" />
+              <FaGem className="absolute -bottom-2 -left-2 text-accent text-2xl animate-float" style={{animationDelay: '1s'}} />
+            </div>
           
-          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
-            <Link to="/dashboard">
-              <Button variant="outline" className="gap-3 hover-scale border-primary/30 hover:border-primary/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
-                <FaGlobe className="w-5 h-5" />
-                View Global Analytics
+            <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
+              Discover your <span className="text-primary font-bold">memecoin personality</span> through our interactive quiz and join <span className="text-accent font-bold">thousands of others</span>!
+            </p>
+            
+            <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
+              <Link to="/dashboard">
+                <Button variant="outline" className="gap-3 hover-scale border-primary/30 hover:border-primary/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
+                  <FaGlobe className="w-5 h-5" />
+                  View Global Analytics
+                </Button>
+              </Link>
+              <Button variant="outline" className="gap-3 hover-scale border-accent/30 hover:border-accent/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
+                <FaChartBar className="w-5 h-5" />
+                {address ? '✅ Wallet Connected' : '🔗 Connect Wallet to Start'}
               </Button>
-            </Link>
-            <Button variant="outline" className="gap-3 hover-scale border-accent/30 hover:border-accent/70 bg-card/50 backdrop-blur-sm text-lg px-8 py-4">
-              <FaChartBar className="w-5 h-5" />
-              {address ? '✅ Wallet Connected' : '🔗 Connect Wallet to Start'}
-            </Button>
+            </div>
           </div>
         </div>
 

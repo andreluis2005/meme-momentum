@@ -5,6 +5,7 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { base } from "wagmi/chains";
 import { walletConnect, injected, coinbaseWallet } from "@wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const wagmiConfig = createConfig({
   chains: [base],
@@ -31,7 +32,9 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <ThemeProvider defaultTheme="dark" storageKey="memecoin-quiz-theme">
+          {children}
+        </ThemeProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

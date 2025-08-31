@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuiz } from "@/hooks/useQuiz";
 import { FaChartBar, FaGlobe, FaRocket, FaGem } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
+import dogBitcoinImage from "@/assets/dog-bitcoin.png";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -243,8 +244,10 @@ const Index = () => {
         </div>
 
         {/* Wallet Connection */}
-        <div className="mb-8">
-          <WalletConnection onConnect={handleWalletConnect} showCard={false} />
+        <div className="mb-8 flex justify-center">
+          <div className="w-full max-w-2xl">
+            <WalletConnection onConnect={handleWalletConnect} showCard={false} />
+          </div>
         </div>
 
         {/* Main Content */}
@@ -276,6 +279,17 @@ const Index = () => {
                     />
                     <div className="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
                   </div>
+                  
+                  {/* Special DOG image */}
+                  {finalResult === "DOG" && (
+                    <div className="mt-6">
+                      <img 
+                        src={dogBitcoinImage} 
+                        alt="DOG with Bitcoin hoodie"
+                        className="w-48 h-48 mx-auto rounded-2xl shadow-2xl border-4 border-primary/30 glow-effect"
+                      />
+                    </div>
+                  )}
                   
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-md mx-auto leading-relaxed font-medium">
                     {memecoins[finalResult]?.description || "A unique memecoin personality!"}
@@ -319,15 +333,17 @@ const Index = () => {
 
           {/* Enhanced Donation Form */}
           {address && (
-            <div className="mt-16">
-              <DonationForm userAddress={address} />
+            <div className="mt-16 flex justify-center">
+              <div className="w-full max-w-2xl">
+                <DonationForm userAddress={address} />
+              </div>
             </div>
           )}
         </div>
 
         {/* Enhanced Footer */}
-        <footer className="mt-20 text-center relative">
-          <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-8 glow-effect">
+        <footer className="mt-20 text-center relative flex justify-center">
+          <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-8 glow-effect w-full max-w-2xl">
             <p className="text-muted-foreground text-lg">
               Built with ❤️ using{" "}
               <a href="https://base.org" className="text-primary hover:text-primary/80 hover:underline font-semibold">Base</a>,{" "}

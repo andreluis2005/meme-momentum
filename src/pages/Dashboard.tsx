@@ -322,7 +322,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
               <Select value={timePeriod} onValueChange={setTimePeriod}>
                 <SelectTrigger>
                   <SelectValue placeholder="Time Period" />
@@ -332,30 +332,6 @@ export default function Dashboard() {
                   <SelectItem value="1">Last 24 Hours</SelectItem>
                   <SelectItem value="7">Last 7 Days</SelectItem>
                   <SelectItem value="30">Last 30 Days</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={animalFilter} onValueChange={setAnimalFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Animal Filter" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Animals</SelectItem>
-                  <SelectItem value="dogs">Dogs</SelectItem>
-                  <SelectItem value="cats">Cats</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={blockchainFilter} onValueChange={setBlockchainFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Blockchain Filter" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Blockchains</SelectItem>
-                  <SelectItem value="ethereum">Ethereum</SelectItem>
-                  <SelectItem value="base">Base</SelectItem>
-                  <SelectItem value="solana">Solana</SelectItem>
                 </SelectContent>
               </Select>
             </div>

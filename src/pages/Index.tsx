@@ -281,23 +281,12 @@ const Index = () => {
                 <CardContent className="space-y-8 relative z-10">
                   <div className="relative inline-block">
                     <img 
-                      src={memecoins[finalResult]?.image} 
+                      src={finalResult === "DOG" ? dogBitcoinImage : memecoins[finalResult]?.image} 
                       alt={memecoins[finalResult]?.name || finalResult}
                       className="w-40 h-40 mx-auto rounded-full shadow-2xl border-4 border-primary/30 glow-effect"
                     />
                     <div className="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
                   </div>
-                  
-                  {/* Special DOG image */}
-                  {finalResult === "DOG" && (
-                    <div className="mt-6">
-                      <img 
-                        src={dogBitcoinImage} 
-                        alt="DOG with Bitcoin hoodie"
-                        className="w-48 h-48 mx-auto rounded-2xl shadow-2xl border-4 border-primary/30 glow-effect"
-                      />
-                    </div>
-                  )}
                   
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-md mx-auto leading-relaxed font-medium">
                     {memecoins[finalResult]?.description || "A unique memecoin personality!"}

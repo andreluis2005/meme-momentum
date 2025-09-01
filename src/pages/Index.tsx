@@ -14,6 +14,14 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { FaChartBar, FaGlobe, FaRocket, FaGem } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import dogMemecoinImage from "@/assets/dog-memecoin-badge.png";
+import dogecoinLogo from "@/assets/dogecoin-logo.png";
+import shibainuLogo from "@/assets/shibainu-logo.png";
+import pepeLogo from "@/assets/pepe-logo.png";
+import dogwifhatLogo from "@/assets/dogwifhat-logo.png";
+import mogcoinLogo from "@/assets/mogcoin-logo.png";
+import turboLogo from "@/assets/turbo-logo.png";
+import trumpcoinLogo from "@/assets/trumpcoin-logo.png";
+import fartcoinLogo from "@/assets/fartcoin-logo.png";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -35,6 +43,32 @@ const memecoins: { [key: string]: { name: string; description: string; image: st
   Toshi: { name: "Toshi", description: "Base's beloved cat memecoin with sophisticated charm.", image: "https://which-memecoin-are-you.vercel.app/toshi.png" },
   Brett: { name: "Brett", description: "The blue guy from the memes, pure internet culture.", image: "https://which-memecoin-are-you.vercel.app/brett.png" },
 };
+
+// Function to get specific memecoin image
+function getMemecoinImage(memecoin: string) {
+  switch (memecoin) {
+    case "DOG":
+      return dogMemecoinImage;
+    case "Dogecoin":
+      return dogecoinLogo;
+    case "ShibaInu":
+      return shibainuLogo;
+    case "Pepe":
+      return pepeLogo;
+    case "dogwifhat":
+      return dogwifhatLogo;
+    case "MogCoin":
+      return mogcoinLogo;
+    case "Turbo":
+      return turboLogo;
+    case "TrumpCoin":
+      return trumpcoinLogo;
+    case "Fartcoin":
+      return fartcoinLogo;
+    default:
+      return memecoins[memecoin]?.image;
+  }
+}
 
 function spawnConfetti() {
   const root = document.getElementById("confetti-root");
@@ -281,7 +315,7 @@ const Index = () => {
                 <CardContent className="space-y-8 relative z-10">
                   <div className="relative inline-block">
                     <img 
-                      src={finalResult === "DOG" ? dogMemecoinImage : memecoins[finalResult]?.image} 
+                      src={getMemecoinImage(finalResult)} 
                       alt={memecoins[finalResult]?.name || finalResult}
                       className="w-40 h-40 mx-auto rounded-full shadow-2xl border-4 border-primary/30 glow-effect"
                     />

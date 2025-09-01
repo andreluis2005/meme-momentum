@@ -13,7 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuiz } from "@/hooks/useQuiz";
 import { FaChartBar, FaGlobe, FaRocket, FaGem } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
-import dogBitcoinImage from "@/assets/dog-bitcoin.png";
+import dogMemecoinImage from "@/assets/dog-memecoin-badge.png";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -281,7 +281,7 @@ const Index = () => {
                 <CardContent className="space-y-8 relative z-10">
                   <div className="relative inline-block">
                     <img 
-                      src={finalResult === "DOG" ? dogBitcoinImage : memecoins[finalResult]?.image} 
+                      src={finalResult === "DOG" ? dogMemecoinImage : memecoins[finalResult]?.image} 
                       alt={memecoins[finalResult]?.name || finalResult}
                       className="w-40 h-40 mx-auto rounded-full shadow-2xl border-4 border-primary/30 glow-effect"
                     />

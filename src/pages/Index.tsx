@@ -313,13 +313,46 @@ const Index = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-8 relative z-10">
-                  <div className="relative inline-block">
-                    <img 
-                      src={getMemecoinImage(finalResult)} 
-                      alt={memecoins[finalResult]?.name || finalResult}
-                      className="w-40 h-40 mx-auto rounded-full shadow-2xl border-4 border-primary/30 glow-effect"
-                    />
-                    <div className="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
+                  <div className="relative inline-block group">
+                    {/* Holographic container */}
+                    <div className="relative p-1 rounded-full bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 animate-pulse">
+                      <div className="relative p-3 rounded-full bg-gradient-to-br from-background/95 to-background/80 backdrop-blur-sm border border-primary/20">
+                        {/* Sci-fi glow effect */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animate-spin" style={{animationDuration: '8s'}}></div>
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-tr from-transparent via-primary/5 to-transparent animate-pulse"></div>
+                        
+                        {/* Image container */}
+                        <div className="relative">
+                          <img 
+                            src={getMemecoinImage(finalResult)} 
+                            alt={memecoins[finalResult]?.name || finalResult}
+                            className="w-32 h-32 rounded-full object-cover relative z-10 group-hover:scale-105 transition-transform duration-300"
+                          />
+                          
+                          {/* Holographic overlay */}
+                          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                          
+                          {/* Scanning line effect */}
+                          <div className="absolute inset-0 rounded-full overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent animate-ping" style={{animationDuration: '3s'}}></div>
+                          </div>
+                        </div>
+                        
+                        {/* Corner accents */}
+                        <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-primary/60 rounded-tl-lg"></div>
+                        <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-primary/60 rounded-tr-lg"></div>
+                        <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-primary/60 rounded-bl-lg"></div>
+                        <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-primary/60 rounded-br-lg"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Floating particles */}
+                    <div className="absolute -inset-4 opacity-30">
+                      <div className="absolute top-0 left-1/4 w-1 h-1 bg-primary rounded-full animate-bounce" style={{animationDelay: '0s', animationDuration: '2s'}}></div>
+                      <div className="absolute top-1/4 right-0 w-1 h-1 bg-accent rounded-full animate-bounce" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}></div>
+                      <div className="absolute bottom-1/4 left-0 w-1 h-1 bg-primary rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '3s'}}></div>
+                      <div className="absolute bottom-0 right-1/3 w-1 h-1 bg-accent rounded-full animate-bounce" style={{animationDelay: '1.5s', animationDuration: '2s'}}></div>
+                    </div>
                   </div>
                   
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-md mx-auto leading-relaxed font-medium">

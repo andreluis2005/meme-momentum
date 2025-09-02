@@ -359,6 +359,25 @@ const Index = () => {
                     {memecoins[finalResult]?.description || "A unique memecoin personality!"}
                   </p>
                   
+                  {/* DOG NFT Minting Link */}
+                  {finalResult === "DOG" && (
+                    <div className="mt-8 p-6 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl border border-primary/20 glow-effect">
+                      <h3 className="text-2xl font-bold text-primary mb-4 flex items-center justify-center gap-2">
+                        <FaGem className="w-6 h-6" />
+                        Exclusive DOG NFT
+                      </h3>
+                      <p className="text-muted-foreground mb-6 text-lg">
+                        Mint your exclusive DOG NFT to commemorate your memecoin match!
+                      </p>
+                      <Button 
+                        onClick={() => window.open('https://zora.co/coin/base:0x9b87c00c231601f6dee0e6ce9c28af769819bcad?referrer=0xa3d7493106d8da40f4934eeb9359b79241536571', '_blank')}
+                        className="btn-quiz text-lg px-8 py-4 w-full sm:w-auto"
+                      >
+                        🎨 Mint DOG NFT on Zora
+                      </Button>
+                    </div>
+                  )}
+                  
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <Button onClick={shareOnTwitter} className="btn-quiz text-lg px-8 py-4">
                       🐦 Share on Twitter

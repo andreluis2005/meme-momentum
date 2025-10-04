@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSendTransaction } from "wagmi";
-import { parseEther } from "viem";
+import { useSendTransaction, useAccount, usePublicClient } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,12 +17,22 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { sendTransactionAsync } = useSendTransaction();
   const { toast } = useToast();
+  const { isConnected } = useAccount();
+  const publicClient = usePublicClient();
 
   const handleDonation = async () => {
     if (!userAddress || !donationAmount) {
       toast({
         title: "Invalid Input",
         description: "Please enter a valid donation amount.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!isConnected) {
+      toast({
+        title: "Connect your wallet",
+        description: "Please connect your wallet before donating.",
         variant: "destructive",
       });
       return;
@@ -59,6 +68,11 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
         to: result.toAddress as `0x${string}`,
         value: BigInt(result.amountInWei),
       });
+
+      // Optionally wait for on-chain confirmation
+      if (publicClient) {
+        await publicClient.waitForTransactionReceipt({ hash: txHash });
+      }
 
       toast({
         title: "Donation Sent! 🎉",

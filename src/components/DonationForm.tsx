@@ -16,7 +16,7 @@ interface DonationFormProps {
 export default function DonationForm({ userAddress }: DonationFormProps) {
   const [donationAmount, setDonationAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { sendTransaction } = useSendTransaction();
+  const { sendTransactionAsync } = useSendTransaction();
   const { toast } = useToast();
 
   const handleDonation = async () => {
@@ -54,8 +54,9 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
         throw new Error(result.error);
       }
 
-      sendTransaction({
-        to: result.toAddress,
+      // Wait for user to confirm transaction in wallet
+      const txHash = await sendTransactionAsync({
+        to: result.toAddress as `0x${string}`,
         value: BigInt(result.amountInWei),
       });
 

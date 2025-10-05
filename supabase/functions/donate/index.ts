@@ -35,7 +35,7 @@ serve(async (req) => {
     }
 
     // Get developer wallet address from environment variable
-    const developerAddress = Deno.env.get('DEVELOPER_WALLET_ADDRESS') || "0x742d35Cc6635C0532925a3b8D5C7B7A5C1f4A0b8";
+    const developerAddress = Deno.env.get('DEVELOPER_WALLET_ADDRESS') || "0xdb5752b438b0bbfe0741b186e6e370f99b18387b";
     
     // Convert ETH to Wei (1 ETH = 10^18 Wei)
     const amount = parseFloat(donationAmount);

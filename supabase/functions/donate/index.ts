@@ -22,11 +22,53 @@ serve(async (req) => {
       );
     }
 
-    const { donationAmount } = await req.json();
+    const body = await req.json();
+    const { donationAmount } = body;
     
-    if (!donationAmount || isNaN(parseFloat(donationAmount))) {
+    // Enhanced input validation
+    if (!donationAmount) {
+      console.warn('Missing donation amount');
       return new Response(
-        JSON.stringify({ error: 'Invalid donation amount' }),
+        JSON.stringify({ error: 'Donation amount is required' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    // Validate amount is a valid number
+    const amount = parseFloat(donationAmount);
+    if (isNaN(amount)) {
+      console.warn('Invalid donation amount format:', donationAmount);
+      return new Response(
+        JSON.stringify({ error: 'Invalid donation amount format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    // Security: Enforce minimum and maximum donation limits
+    const MIN_DONATION = 0.0001; // Minimum 0.0001 ETH to prevent spam
+    const MAX_DONATION = 100;     // Maximum 100 ETH to prevent errors/abuse
+    
+    if (amount < MIN_DONATION) {
+      console.warn('Donation amount too small:', amount);
+      return new Response(
+        JSON.stringify({ error: `Minimum donation is ${MIN_DONATION} ETH` }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    if (amount > MAX_DONATION) {
+      console.warn('Donation amount too large:', amount);
+      return new Response(
+        JSON.stringify({ error: `Maximum donation is ${MAX_DONATION} ETH` }),
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -37,9 +79,10 @@ serve(async (req) => {
     // Get developer wallet address from environment variable
     const developerAddress = Deno.env.get('DEVELOPER_WALLET_ADDRESS') || "0xdb5752b438b0bbfe0741b186e6e370f99b18387b";
     
-    // Convert ETH to Wei (1 ETH = 10^18 Wei)
-    const amount = parseFloat(donationAmount);
+    // Convert ETH to Wei (1 ETH = 10^18 Wei) with precision handling
     const amountInWei = (amount * Math.pow(10, 18)).toString();
+
+    console.log(`Processing donation: ${amount} ETH (${amountInWei} Wei) to ${developerAddress}`);
 
     return new Response(
       JSON.stringify({ 

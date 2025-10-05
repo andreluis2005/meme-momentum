@@ -21,14 +21,7 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
   const publicClient = usePublicClient();
 
   const handleDonation = async () => {
-    if (!userAddress || !donationAmount) {
-      toast({
-        title: "Invalid Input",
-        description: "Please enter a valid donation amount.",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Enhanced client-side validation
     if (!isConnected) {
       toast({
         title: "Connect your wallet",
@@ -38,13 +31,51 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
       return;
     }
 
+    if (!userAddress || !donationAmount) {
+      toast({
+        title: "Invalid Input",
+        description: "Please enter a valid donation amount.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate amount
+    const amount = parseFloat(donationAmount);
+    if (isNaN(amount) || amount <= 0) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter a positive number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Enforce min/max limits (matching edge function)
+    const MIN_DONATION = 0.0001;
+    const MAX_DONATION = 100;
+
+    if (amount < MIN_DONATION) {
+      toast({
+        title: "Amount Too Small",
+        description: `Minimum donation is ${MIN_DONATION} ETH.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (amount > MAX_DONATION) {
+      toast({
+        title: "Amount Too Large",
+        description: `Maximum donation is ${MAX_DONATION} ETH.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
     
     try {
-      const amount = parseFloat(donationAmount);
-      if (isNaN(amount) || amount <= 0) {
-        throw new Error("Invalid amount");
-      }
 
       const response = await fetch("https://kifazfavgxpanbdkmtaj.supabase.co/functions/v1/donate", {
         method: "POST",
@@ -113,8 +144,9 @@ export default function DonationForm({ userAddress }: DonationFormProps) {
               value={donationAmount}
               onChange={(e) => setDonationAmount(e.target.value)}
               placeholder="0.001"
-              step="0.001"
-              min="0"
+              step="0.0001"
+              min="0.0001"
+              max="100"
               className="pl-10"
             />
           </div>

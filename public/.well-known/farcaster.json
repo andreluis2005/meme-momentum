@@ -1,0 +1,21 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHhkYjU3NTJiNDM4YjBiYmZlMDc0MWIxODZlNmUzNzBmOTliMTgzODdiIn0",
+    "payload": "eyJkb21haW4iOiJ3aGljaG1lbWVjb2luYXJleW91LnZlcmNlbC5hcHAifQ",
+    "signature": "MHg..."
+  },
+  "frame": {
+    "version": "next",
+    "imageUrl": "https://whichmemecoinareyou.vercel.app/og-image.png",
+    "button": {
+      "title": "Which Memecoin Are You?",
+      "action": {
+        "type": "launch_frame",
+        "name": "Which Memecoin Are You",
+        "url": "https://whichmemecoinareyou.vercel.app",
+        "splashImageUrl": "https://whichmemecoinareyou.vercel.app/splash.png",
+        "splashBackgroundColor": "#1a1f2e"
+      }
+    }
+  }
+}

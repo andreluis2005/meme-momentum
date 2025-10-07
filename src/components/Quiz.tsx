@@ -134,9 +134,9 @@ export default function Quiz({ onComplete }: QuizProps) {
               onClick={() => handleAnswer(option.points)}
               variant="outline"
               size="lg"
-              className="p-6 h-auto text-left justify-start hover:scale-105 transition-all duration-300 border-2 hover:border-accent hover:bg-accent/10"
+              className="p-6 h-auto text-left justify-start hover:scale-105 transition-all duration-300 border-2 hover:border-accent hover:bg-accent/10 whitespace-normal min-h-[60px]"
             >
-              <span className="text-base font-medium">{option.text}</span>
+              <span className="text-base font-medium break-words w-full">{option.text}</span>
             </Button>
           ))}
         </div>

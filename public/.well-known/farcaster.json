@@ -6,8 +6,8 @@
   },
   "frame": {
     "version": "next",
-    "name": "Which Memecoin Are You",
-    "iconUrl": "https://whichmemecoinareyou.vercel.app/favicon.ico",
+    "name": "Which Memecoin Are You ?",
+    "iconUrl": "https://whichmemecoinareyou.vercel.app/memecoin-icon.png",
     "homeUrl": "https://whichmemecoinareyou.vercel.app",
     "imageUrl": "https://whichmemecoinareyou.vercel.app/og-image.png",
     "button": {

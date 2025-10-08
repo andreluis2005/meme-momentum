@@ -15,12 +15,13 @@
     "buttonTitle": "Take the Quiz",
     "subtitle": "Web3 Personality Quiz",
     "description": "Discover your memecoin match through our interactive quiz. Built on Base blockchain with Web3 integration, wallet connection, and global leaderboards.",
-    "ogTitle": "Which Memecoin Are You? | Find Your Crypto Personality",
-    "ogDescription": "Take our interactive quiz to discover which memecoin matches your personality. Features Web3 integration and global analytics.",
+    "ogTitle": "Which Memecoin Are You",
+    "ogDescription": "Discover your memecoin personality through an interactive Web3 quiz on Base blockchain.",
     "ogImageUrl": "https://whichmemecoinareyou.vercel.app/og-image.png",
+    "heroImageUrl": "https://whichmemecoinareyou.vercel.app/og-image.png",
     "primaryCategory": "entertainment",
     "tags": ["quiz", "memecoin", "crypto", "web3", "personality"],
-    "tagline": "Find your memecoin personality match!",
+    "tagline": "Find your memecoin match!",
     "button": {
       "title": "Take the Quiz",
       "action": {

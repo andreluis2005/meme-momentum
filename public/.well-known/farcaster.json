@@ -5,7 +5,7 @@
     "signature": "9b4lAIcYAt7kyucG/tTn4GKFwU86gm6oqYg5nE81UTJZP2VxsNz+96UynunNYZfNoB4tN/P75tRevLRxuizJgxs="
   },
   "frame": {
-    "version": "next",
+    "version": "1",
     "name": "Which Memecoin Are You?",
     "iconUrl": "https://whichmemecoinareyou.vercel.app/memecoin-icon.png",
     "homeUrl": "https://whichmemecoinareyou.vercel.app",

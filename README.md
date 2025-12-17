@@ -205,3 +205,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 **Take the quiz and discover your memecoin personality!** 🎉
+
+-- novas implementações a caminho

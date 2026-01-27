@@ -441,7 +441,7 @@ const Index = () => {
         <div id="confetti-root" className="fixed inset-0 pointer-events-none z-50" />
       </div>
     </div>
-  );
+  ); {/* Enhanced Donation Form */}
 };
 
 export default Index;
